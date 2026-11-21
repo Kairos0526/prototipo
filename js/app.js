@@ -155,7 +155,7 @@ function pintarCatalogo() {
     ? 'Precios al detal · Puedes combinar con Al Mayor en el mismo pedido'
     : 'Precios al mayor · Se suman con tus unidades Al Detal';
 
-  $('list').innerHTML = productos.map((p, i) => {
+  $('lista').innerHTML = productos.map((p, i) => {
     const k = claveItem(p.n, modoActual);
     const cantEnModo = carrito[k] || 0;
     const totalReservado = stockReservadoDeProducto(p.n);
@@ -208,7 +208,7 @@ function actualizarBarra() {
   }
 }
 
-$('list').addEventListener('click', e => {
+$('lista').addEventListener('click', e => {
   const btnFoto = e.target.closest('button[data-foto]');
   if (btnFoto) {
     const p = productos[btnFoto.dataset.foto];
@@ -603,7 +603,7 @@ function prepararAyuda() {
 
 /* ---- Motor WebGL Honey Cream (panales, gotas y abejas) con reunión en escenario ---- */
 function crearEscenaMiel() {
-  const cv = $('mar'), pz = $('pausa'), escenario = $('escenario');
+  const cv = $('mar'), pausa = $('pausa'), escenario = $('escenario');
   const mq = matchMedia('(prefers-reduced-motion:reduce)');
   let paused = mq.matches, raf = 0, px = -1e3, py = -1e3, W = 0, H = 0, sy = scrollY, last = 0, gl = null;
   let catalogoIdx = 0, giro = 0, vGiro = 0, arrastrando = false, xPrev = 0, reunion = 0;
