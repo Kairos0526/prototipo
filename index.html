@@ -1,201 +1,175 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Honey Cream · Tortas artesanales en San Felipe</title>
-<link rel="stylesheet" href="./css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Honey Cream · Como la miel pero más rico...</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<a class="salto" href="#contenido">Saltar al contenido</a>
-<canvas class="mar" id="mar" aria-hidden="true"></canvas>
+  <canvas id="mar" aria-hidden="true"></canvas>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="bee" viewBox="0 0 40 40">
-    <ellipse cx="14" cy="12" rx="8" ry="5" fill="#ffe5a3" opacity=".65" transform="rotate(-30 14 12)"/>
-    <ellipse cx="26" cy="12" rx="8" ry="5" fill="#ffe5a3" opacity=".65" transform="rotate(30 26 12)"/>
-    <ellipse cx="20" cy="24" rx="10" ry="8" fill="#e3b04b"/>
-    <path d="M16 17.5v13M21 16.5v15M26 18v12" stroke="#050507" stroke-width="3"/>
-  </symbol>
-</svg>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="bee" viewBox="0 0 40 40">
+      <ellipse cx="20" cy="22" rx="10" ry="12" fill="#e3b04b"/>
+      <path d="M12 18h16M11 23h18M13 28h14" stroke="#1a1206" stroke-width="2.4"/>
+      <circle cx="20" cy="10" r="5" fill="#ffe5a3"/>
+      <ellipse cx="11" cy="14" rx="6" ry="3.5" transform="rotate(-25 11 14)" fill="#fff8e1" opacity=".8"/>
+      <ellipse cx="29" cy="14" rx="6" ry="3.5" transform="rotate(25 29 14)" fill="#fff8e1" opacity=".8"/>
+    </symbol>
+  </svg>
 
-<div class="pagina">
-  <header class="portada" id="portada">
-    <div class="portada-contenido" id="portada-contenido">
-      <div class="barra-superior">
-        <p class="aviso-demo" id="aviso-estado">Prototipo Honey Cream · Toca o arrastra</p>
-        <button type="button" class="pausa" id="pausa">Pausar movimiento</button>
+  <header class="encabezado">
+    <div class="marca">
+      <img id="logo-img" alt="Honey Cream">
+      <div>
+        <h1>Honey Cream</h1>
+        <p class="rubro">Como la miel pero más rico...</p>
       </div>
-      <p class="estado" id="estado"><span class="punto" aria-hidden="true"></span><span id="estado-texto"></span></p>
-      <div class="marca-cabecera">
-        <div class="logo-marca" id="logo-marca">
-          <svg viewBox="0 0 40 40" aria-hidden="true"><use href="#bee"/></svg>
-          <img id="logo-img" alt="Logo de Honey Cream" onerror="this.remove()">
-        </div>
-        <div>
-          <h1 class="nombre" id="nombre">Honey Cream</h1>
-          <p class="rubro" id="rubro">Como la miel pero más rico...</p>
-        </div>
-      </div>
-      <div class="acciones">
-        <a class="boton-principal" id="enlace-whatsapp" href="#" target="_blank" rel="noopener">Pedir por WhatsApp</a>
-        <nav class="enlaces" aria-label="Accesos rápidos">
-          <a href="#catalogo">Menú</a>
-          <a href="#pagar">Datos de pago</a>
-          <a href="#contacto">Contacto y mapa</a>
-          <a id="enlace-resena" href="#" target="_blank" rel="noopener">Dejar reseña</a>
-        </nav>
-        <p class="telefono">Teléfono <a id="enlace-telefono" href="#"></a></p>
-      </div>
+    </div>
+    <div class="controles-top">
+      <span id="estado" class="estado"><span id="estado-texto">Verificando horario...</span></span>
+      <button id="pausa" type="button" class="boton-control">Pausar movimiento</button>
     </div>
   </header>
 
-  <main class="contenido" id="contenido">
-    <section class="catalogo" id="catalogo" aria-labelledby="titulo-menu">
-      <div class="pestanas" id="pestanas" role="tablist" aria-label="Modalidad de precio">
-        <button type="button" class="pestana" id="pestana-0" role="tab" aria-selected="true" data-modo="a">Al Detal</button>
-        <button type="button" class="pestana" id="pestana-1" role="tab" aria-selected="false" data-modo="m">Al Mayor</button>
+  <main id="escenario" class="escenario">
+    <section class="panel catalogo" aria-labelledby="titulo-menu">
+      <div class="pestanas" role="tablist" aria-label="Tipo de presentación">
+        <button type="button" class="pestana" role="tab" data-modo="a" aria-selected="true">Al Detal</button>
+        <button type="button" class="pestana" role="tab" data-modo="m" aria-selected="false">Al Mayor</button>
       </div>
-      <div class="escenario" id="escenario">
-        <p class="pista">Arrastra para girar · Las partículas se reúnen aquí</p>
-        <h2 class="titulo-catalogo" id="titulo-menu">Al Detal</h2>
-        <p class="nota-catalogo" id="nota-catalogo">Porciones y tortas al detal · Se suman con Al Mayor</p>
-      </div>
-      <div class="panel lista" id="lista" role="tabpanel"></div>
+      <h2 id="titulo-menu">Al Detal</h2>
+      <p id="nota-catalogo" class="nota-catalogo">Precios al detal · Puedes combinar con Al Mayor en el mismo pedido</p>
+      <p id="aviso-estado" class="aviso-estado">Cargando inventario...</p>
+      <ul id="lista" class="lista-productos"></ul>
     </section>
 
-    <section class="panel" id="pagar" aria-labelledby="titulo-pagos">
-      <h2 id="titulo-pagos">Datos de pago</h2>
+    <section class="panel" aria-labelledby="titulo-pago">
+      <h2 id="titulo-pago">Datos de pago</h2>
       <div id="filas-pago"></div>
-      <button type="button" class="copiar-todo" id="copiar-todo">Copiar todos los datos</button>
+      <button id="copiar-todo" type="button" class="boton-secundario">Copiar todos los datos</button>
     </section>
 
-    <section class="panel" id="opiniones-panel" aria-labelledby="titulo-opiniones">
-      <h2 id="titulo-opiniones">Opiniones</h2>
-      <div id="opiniones"></div>
-      <a class="boton-secundario" id="enlace-opinar" href="#" target="_blank" rel="noopener">Dejar reseña en Google Maps</a>
-    </section>
-
-    <section class="panel" id="contacto" aria-labelledby="titulo-contacto">
+    <section class="panel" aria-labelledby="titulo-contacto">
       <h2 id="titulo-contacto">Contacto y ubicación</h2>
       <div id="filas-contacto"></div>
-      <h3 class="subtitulo">Hacemos delivery hacia</h3>
-      <ul class="chips" id="zonas-delivery"></ul>
-      <h3 class="subtitulo">Horario</h3>
-      <div class="horario" id="horario"></div>
-      <a class="copiar-todo" id="como-llegar" href="#" target="_blank" rel="noopener">Cómo llegar</a>
-      <iframe id="mapa" title="Mapa de ubicación de Honey Cream" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <footer class="pie">
-        <p id="direccion"></p>
-        <details class="plegable"><summary>Política de privacidad</summary><ul id="privacidad"></ul></details>
-        <details class="plegable"><summary>Accesibilidad</summary><ul id="accesibilidad"></ul></details>
-      </footer>
+      <p class="acciones-rapidas">
+        <a id="enlace-whatsapp" class="boton-primario" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a id="enlace-telefono" class="boton-secundario"></a>
+        <a id="como-llegar" class="boton-secundario" target="_blank" rel="noopener">Cómo llegar</a>
+      </p>
+      <p id="direccion" class="direccion"></p>
+      <div class="mapa-marco">
+        <iframe id="mapa" title="Ubicación de Honey Cream" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <h3>Zonas de delivery</h3>
+      <ul id="zonas-delivery" class="zonas-lista"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-horario">
+      <h2 id="titulo-horario">Horario de atención</h2>
+      <div id="horario" class="horario-grid"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-opiniones">
+      <h2 id="titulo-opiniones">Opiniones</h2>
+      <div id="opiniones"></div>
+      <p class="enlaces-resena">
+        <a id="enlace-resena" target="_blank" rel="noopener">Ver en Google Maps</a> ·
+        <a id="enlace-opinar" target="_blank" rel="noopener">Dejar una reseña</a>
+      </p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-legales">
+      <h2 id="titulo-legales">Privacidad y accesibilidad</h2>
+      <h3>Privacidad</h3>
+      <ul id="privacidad"></ul>
+      <h3>Accesibilidad</h3>
+      <ul id="accesibilidad"></ul>
     </section>
   </main>
-</div>
 
-<div class="pedido" id="pedido" role="region" aria-label="Tu pedido" hidden>
-  <p class="resumen" id="resumen" aria-live="polite"></p>
-  <button type="button" id="abrir-pedido" aria-haspopup="dialog">Ver mi pedido</button>
-</div>
+  <div id="pedido" class="barra-pedido" hidden>
+    <p id="resumen" class="resumen-pedido"></p>
+    <button id="abrir-pedido" type="button" class="boton-primario">Ver pedido</button>
+  </div>
 
-<button type="button" class="chat-boton" id="chat-boton" aria-expanded="false" aria-controls="chat">? Ayuda</button>
-<section class="chat" id="chat" role="dialog" aria-labelledby="chat-titulo" hidden>
-  <header class="chat-cabecera">
-    <div>
-      <h2 id="chat-titulo">Ayuda</h2>
-      <p>Respuestas rápidas · Honey Cream</p>
-    </div>
-    <button type="button" class="chat-cerrar" id="chat-cerrar" aria-label="Cerrar ayuda">×</button>
-  </header>
-  <div class="chat-mensajes" id="chat-mensajes" aria-live="polite"></div>
-  <div class="chat-preguntas" id="chat-preguntas"></div>
-</section>
-
-<div class="hoja-pedido" id="hoja-pedido" hidden>
-  <section class="pedido-panel" id="pedido-panel" role="dialog" aria-modal="true" aria-labelledby="pedido-titulo">
-    <header class="pedido-cabecera">
-      <h2 id="pedido-titulo">Tu pedido</h2>
-      <button type="button" class="chat-cerrar" id="cerrar-pedido" aria-label="Cerrar pedido">×</button>
-    </header>
-
-    <div id="lineas-pedido"></div>
-    <p class="total-pedido" aria-live="polite"><span>Total</span><strong id="total-pedido"></strong></p>
-
-    <div class="paso">
-      <h3 class="subtitulo">1. Paga por Pago Móvil</h3>
-      <p class="nota">Realiza el pago por el total indicado y anota el número de referencia que te arroje el banco.</p>
-      <div id="datos-pago-hoja"></div>
-      <button type="button" class="copiar" id="copiar-pago-hoja">Copiar datos de Pago Móvil</button>
-    </div>
-
-    <form class="paso" id="forma-pedido" novalidate>
-      <h3 class="subtitulo">2. Tus datos y entrega</h3>
-      <div class="dos-columnas">
-        <div class="campo">
-          <label for="f-nombre">Nombre</label>
-          <input id="f-nombre" type="text" required aria-describedby="e-nombre">
-          <p class="error" id="e-nombre" hidden></p>
-        </div>
-        <div class="campo">
-          <label for="f-apellido">Apellido</label>
-          <input id="f-apellido" type="text" required aria-describedby="e-apellido">
-          <p class="error" id="e-apellido" hidden></p>
-        </div>
+  <div id="hoja-pedido" class="modal-backdrop" hidden>
+    <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="titulo-hoja">
+      <div class="modal-cabecera">
+        <h2 id="titulo-hoja">Tu pedido</h2>
+        <button id="cerrar-pedido" type="button" aria-label="Cerrar pedido">✕</button>
       </div>
-      <div class="campo">
-        <label for="f-cedula">Cédula</label>
-        <div class="campo-cedula">
-          <select id="f-tipo" aria-label="Tipo de cédula">
+      <div id="lineas-pedido"></div>
+      <p class="total-linea">Total: <strong id="total-pedido">$0.00</strong></p>
+
+      <div id="datos-pago-hoja"></div>
+      <button id="copiar-pago-hoja" type="button" class="boton-secundario">Copiar datos de pago</button>
+
+      <form id="form-pedido" class="form-pedido" novalidate>
+        <label>Nombre <input id="f-nombre" type="text" required></label>
+        <p id="e-nombre" class="error-campo" hidden></p>
+
+        <label>Apellido <input id="f-apellido" type="text" required></label>
+        <p id="e-apellido" class="error-campo" hidden></p>
+
+        <label>Tipo de documento
+          <select id="f-tipo">
             <option value="V">V</option>
             <option value="E">E</option>
           </select>
-          <input id="f-cedula" type="text" inputmode="numeric" required aria-describedby="e-cedula">
+        </label>
+
+        <label>Cédula <input id="f-cedula" type="text" inputmode="numeric" required></label>
+        <p id="e-cedula" class="error-campo" hidden></p>
+
+        <label>Teléfono <input id="f-telefono" type="tel" required></label>
+        <p id="e-telefono" class="error-campo" hidden></p>
+
+        <label>Referencia Pago Móvil <input id="f-referencia" type="text" inputmode="numeric" required></label>
+        <p id="e-referencia" class="error-campo" hidden></p>
+
+        <label>Modalidad de entrega
+          <select id="f-entrega"></select>
+        </label>
+
+        <label>Dirección o punto de referencia <input id="f-direccion" type="text"></label>
+
+        <p id="estado-envio" class="estado-envio"></p>
+        <div class="acciones-hoja">
+          <button id="vaciar-pedido" type="button" class="boton-secundario">Vaciar</button>
+          <a id="enviar-pedido" class="boton-primario" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
         </div>
-        <p class="error" id="e-cedula" hidden></p>
-      </div>
-      <div class="campo">
-        <label for="f-telefono">Teléfono</label>
-        <input id="f-telefono" type="tel" inputmode="tel" required aria-describedby="e-telefono">
-        <p class="error" id="e-telefono" hidden></p>
-      </div>
-      <div class="campo">
-        <label for="f-referencia">Referencia del Pago Móvil</label>
-        <input id="f-referencia" type="text" inputmode="numeric" required aria-describedby="e-referencia">
-        <p class="error" id="e-referencia" hidden></p>
-      </div>
-      <div class="campo">
-        <label for="f-entrega">Entrega o zona de delivery</label>
-        <select id="f-entrega"></select>
-      </div>
-      <div class="campo">
-        <label for="f-direccion">Dirección o punto de referencia</label>
-        <input id="f-direccion" type="text" placeholder="Ej.: Retiro en local o dirección exacta">
-      </div>
-    </form>
-
-    <div class="paso">
-      <h3 class="subtitulo">3. Envía tu pedido</h3>
-      <a class="copiar-todo" id="enviar-pedido" href="#" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a>
-      <p class="nota" id="estado-envio" role="status"></p>
-      <button type="button" class="copiar" id="vaciar-pedido">Vaciar pedido</button>
+      </form>
     </div>
-  </section>
-</div>
-
-<div class="visor-foto" id="visor-foto" hidden>
-  <div class="visor-caja" role="dialog" aria-modal="true" aria-labelledby="visor-titulo">
-    <div class="pedido-cabecera">
-      <h2 id="visor-titulo"></h2>
-      <button type="button" class="chat-cerrar" id="cerrar-visor" aria-label="Cerrar foto">×</button>
-    </div>
-    <img id="visor-img" alt="">
-    <p class="nota" id="visor-desc"></p>
   </div>
-</div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div id="visor-foto" class="modal-backdrop" hidden>
+    <div class="modal-caja">
+      <div class="modal-cabecera">
+        <h2 id="visor-titulo"></h2>
+        <button id="cerrar-visor" type="button" aria-label="Cerrar vista previa">✕</button>
+      </div>
+      <img id="visor-img" hidden>
+      <p id="visor-desc"></p>
+    </div>
+  </div>
 
-<script src="./js/app.js"></script>
+  <div class="ayuda-flotante">
+    <button id="chat-boton" type="button" class="boton-primario" aria-expanded="false" aria-controls="chat">Ayuda</button>
+    <div id="chat" class="chat-caja" hidden>
+      <div class="modal-cabecera">
+        <strong>Ayuda Honey Cream</strong>
+        <button id="chat-cerrar" type="button" aria-label="Cerrar ayuda">✕</button>
+      </div>
+      <div id="chat-mensajes" class="chat-mensajes"></div>
+      <div id="chat-preguntas" class="chat-preguntas"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
