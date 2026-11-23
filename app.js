@@ -210,18 +210,11 @@ function actualizarBarra() {
   const { unidades, total } = resumenCarrito();
   const hayPedido = unidades > 0;
   $('pedido').hidden = !hayPedido;
-  if ($('ayuda-flotante')) {
-    $('ayuda-flotante').hidden = !hayPedido;
-    if (!hayPedido) {
-      $('chat').hidden = true;
-      $('chat-boton').hidden = false;
-      $('chat-boton').setAttribute('aria-expanded', 'false');
-    }
-  }
   document.body.classList.toggle('con-pedido', hayPedido);
   if (hayPedido) {
     $('resumen').innerHTML = '<strong>' + money(total) + '</strong> · ' + unidades + (unidades === 1 ? ' producto en total' : ' productos en total');
   } else {
+    $('resumen').textContent = '';
     $('resumen').innerHTML = '';
   }
   if (!$('hoja-pedido').hidden) {
@@ -465,11 +458,14 @@ function prepararHojaPedido() {
   $('hoja-pedido').addEventListener('click', e => { if (e.target === $('hoja-pedido')) cerrarHojaPedido(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !$('hoja-pedido').hidden) cerrarHojaPedido(); });
 
-  $('lineas-pedido').addEventListener('click', e => {
+  function manejarBotonHoja(e) {
     const b = e.target.closest('button[data-hoja-clave]');
     if (!b) return;
-    const clave = b.dataset.hojaClave;
-    const delta = Number(b.dataset.d);
+    e.preventDefault();
+    e.stopPropagation();
+    const clave = b.dataset.hojaClave || b.getAttribute('data-hoja-clave');
+    const delta = Number(b.dataset.d || b.getAttribute('data-d'));
+    if (!clave || !delta) return;
     const [nombre] = clave.split('::');
     const prod = productos.find(x => x.n === nombre);
     if (!prod) return;
@@ -486,7 +482,12 @@ function prepararHojaPedido() {
     else delete carrito[clave];
     pintarCatalogo();
     actualizarBarra();
-  });
+    if (!$('hoja-pedido').hidden && resumenCarrito().unidades > 0) {
+      pintarHojaPedido();
+      actualizarEnlaceWhatsApp();
+    }
+  }
+  $('lineas-pedido').addEventListener('click', manejarBotonHoja);
 
   CAMPOS.forEach(id => {
     $('f-' + id).addEventListener('input', () => {
