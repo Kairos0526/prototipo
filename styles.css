@@ -297,15 +297,24 @@ body.con-pedido {
   display: none;
 }
 
+.modal-backdrop {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .modal-caja {
   width: 100%;
   max-width: 520px;
-  max-height: 88vh;
+  max-height: 85dvh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   background: #1c1409;
   border: 1px solid var(--borde);
   border-radius: 16px;
   padding: 16px;
+  padding-bottom: 32px;
 }
 
 .modal-cabecera {

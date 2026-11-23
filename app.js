@@ -201,7 +201,7 @@ function actualizarBarra() {
   $('pedido').hidden = unidades === 0;
   document.body.classList.toggle('con-pedido', unidades > 0);
   if (unidades > 0) {
-    $('resumen').innerHTML = '<strong>' + money(total) + '</strong>' + unidades + (unidades === 1 ? ' producto en total' : ' productos en total');
+    $('resumen').innerHTML = '<strong>' + money(total) + '</strong> · ' + unidades + (unidades === 1 ? ' producto en total' : ' productos en total');
   }
   if (!$('hoja-pedido').hidden) {
     if (unidades === 0) cerrarHojaPedido();
