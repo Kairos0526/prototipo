@@ -99,7 +99,7 @@ html, body {
 }
 
 body.con-pedido {
-  padding-bottom: 84px;
+  padding-bottom: 145px;
 }
 
 .panel {
@@ -377,8 +377,15 @@ body.con-pedido {
 }
 
 body.con-pedido .ayuda-flotante {
-  bottom: 88px;
+  bottom: 92px;
 }
+.barra-pedido[hidden],
+.ayuda-flotante[hidden],
+.chat-caja[hidden],
+#chat-boton[hidden] {
+  display: none !important;
+}
+
 
 .chat-caja {
   width: 300px;

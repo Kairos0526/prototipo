@@ -208,13 +208,24 @@ function resumenCarrito() {
 
 function actualizarBarra() {
   const { unidades, total } = resumenCarrito();
-  $('pedido').hidden = unidades === 0;
-  document.body.classList.toggle('con-pedido', unidades > 0);
-  if (unidades > 0) {
+  const hayPedido = unidades > 0;
+  $('pedido').hidden = !hayPedido;
+  if ($('ayuda-flotante')) {
+    $('ayuda-flotante').hidden = !hayPedido;
+    if (!hayPedido) {
+      $('chat').hidden = true;
+      $('chat-boton').hidden = false;
+      $('chat-boton').setAttribute('aria-expanded', 'false');
+    }
+  }
+  document.body.classList.toggle('con-pedido', hayPedido);
+  if (hayPedido) {
     $('resumen').innerHTML = '<strong>' + money(total) + '</strong> · ' + unidades + (unidades === 1 ? ' producto en total' : ' productos en total');
+  } else {
+    $('resumen').innerHTML = '';
   }
   if (!$('hoja-pedido').hidden) {
-    if (unidades === 0) cerrarHojaPedido();
+    if (!hayPedido) cerrarHojaPedido();
     else { pintarHojaPedido(); actualizarEnlaceWhatsApp(); }
   }
 }
@@ -457,7 +468,7 @@ function prepararHojaPedido() {
   $('lineas-pedido').addEventListener('click', e => {
     const b = e.target.closest('button[data-hoja-clave]');
     if (!b) return;
-    const clave = b.dataset.hoja-clave;
+    const clave = b.dataset.hojaClave;
     const delta = Number(b.dataset.d);
     const [nombre] = clave.split('::');
     const prod = productos.find(x => x.n === nombre);
