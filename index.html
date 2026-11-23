@@ -29,6 +29,7 @@
     </div>
     <div class="controles-top">
       <span id="estado" class="estado"><span id="estado-texto">Verificando horario...</span></span>
+      <a id="wa-consulta-top" class="boton-secundario" target="_blank" rel="noopener">WhatsApp directo</a>
       <button id="pausa" type="button" class="boton-control">Pausar movimiento</button>
     </div>
   </header>
@@ -81,13 +82,6 @@
       </p>
     </section>
 
-    <section class="panel" aria-labelledby="titulo-legales">
-      <h2 id="titulo-legales">Privacidad y accesibilidad</h2>
-      <h3>Privacidad</h3>
-      <ul id="privacidad"></ul>
-      <h3>Accesibilidad</h3>
-      <ul id="accesibilidad"></ul>
-    </section>
   </main>
 
   <div id="pedido" class="barra-pedido" hidden>
@@ -102,6 +96,7 @@
         <button id="cerrar-pedido" type="button" aria-label="Cerrar pedido">✕</button>
       </div>
       <div id="lineas-pedido"></div>
+      <div id="desglose-pedido" class="desglose-pedido"></div>
       <p class="total-linea">Total: <strong id="total-pedido">$0.00</strong></p>
 
       <div id="datos-pago-hoja"></div>
@@ -165,6 +160,7 @@
       </div>
       <div id="chat-mensajes" class="chat-mensajes"></div>
       <div id="chat-preguntas" class="chat-preguntas"></div>
+      <a id="wa-consulta-chat" class="boton-primario wa-chat-btn" target="_blank" rel="noopener">Consultar por WhatsApp</a>
     </div>
   </div>
 

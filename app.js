@@ -182,6 +182,8 @@ function pintarCatalogo() {
 
 function resumenCarrito() {
   let unidades = 0, total = 0;
+  let unidadesDetal = 0, totalDetal = 0;
+  let unidadesMayor = 0, totalMayor = 0;
   const lineas = [];
   for (const [k, cant] of Object.entries(carrito)) {
     if (!cant) continue;
@@ -189,11 +191,19 @@ function resumenCarrito() {
     const prod = productos.find(x => x.n === nombre);
     if (!prod) continue;
     const unit = precioUnitario(prod, m);
+    const sub = unit * cant;
     unidades += cant;
-    total += unit * cant;
-    lineas.push({ clave: k, producto: prod, modo: m, cantidad: cant, unitario: unit, subtotal: unit * cant });
+    total += sub;
+    if (m === 'm') {
+      unidadesMayor += cant;
+      totalMayor += sub;
+    } else {
+      unidadesDetal += cant;
+      totalDetal += sub;
+    }
+    lineas.push({ clave: k, producto: prod, modo: m, cantidad: cant, unitario: unit, subtotal: sub });
   }
-  return { unidades, total, lineas };
+  return { unidades, total, unidadesDetal, totalDetal, unidadesMayor, totalMayor, lineas };
 }
 
 function actualizarBarra() {
@@ -377,7 +387,7 @@ function actualizarEnlaceWhatsApp() {
 }
 
 function pintarHojaPedido() {
-  const { total, lineas } = resumenCarrito();
+  const { total, unidadesDetal, totalDetal, unidadesMayor, totalMayor, lineas } = resumenCarrito();
   $('lineas-pedido').innerHTML = lineas.map(l =>
     '<div class="linea-pedido">' +
       '<div class="datos-linea">' +
@@ -392,6 +402,11 @@ function pintarHojaPedido() {
       '</div>' +
     '</div>'
   ).join('');
+  if ($('desglose-pedido')) {
+    $('desglose-pedido').innerHTML =
+      '<div class="fila"><span class="etiqueta">Al Detal</span><span class="valor">' + unidadesDetal + ' u. · ' + money(totalDetal) + '</span></div>' +
+      '<div class="fila"><span class="etiqueta">Al Mayor</span><span class="valor">' + unidadesMayor + ' u. · ' + money(totalMayor) + '</span></div>';
+  }
   $('total-pedido').textContent = money(total);
 }
 
@@ -499,6 +514,7 @@ function prepararHojaPedido() {
     carrito = {};
     pintarCatalogo();
     actualizarBarra();
+    document.body.classList.remove('con-pedido');
     cerrarHojaPedido();
   });
 }
@@ -550,15 +566,9 @@ function pintarContactoYLegales() {
     ? RESENAS.map(r => '<blockquote class="opinion"><p>' + esc(r.texto) + '</p><cite>' + esc(r.nombre) + '</cite></blockquote>').join('')
     : '<p class="opinion">Aún no hay reseñas publicadas. Aquí solo se muestran opiniones reales de clientes.</p>';
 
-  $('privacidad').innerHTML = [
-    'Los datos del formulario y la referencia del Pago Móvil se usan para armar el mensaje de WhatsApp y verificar el pago.',
-    'Las actualizaciones de disponibilidad consultan la hoja configurada para mostrar el stock al día.'
-  ].map(x => '<li>' + esc(x) + '</li>').join('');
-
-  $('accesibilidad').innerHTML = [
-    'Incluye botón para pausar movimiento y respeta la preferencia de movimiento reducido.',
-    'Controles táctiles amplios y soporte de teclado.'
-  ].map(x => '<li>' + esc(x) + '</li>').join('');
+  const urlConsulta = waURL('Hola ' + NEG.nombre + ', tengo una consulta.');
+  if ($('wa-consulta-top')) $('wa-consulta-top').href = urlConsulta;
+  if ($('wa-consulta-chat')) $('wa-consulta-chat').href = urlConsulta;
 }
 
 function prepararAyuda() {
